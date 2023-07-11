@@ -7,17 +7,26 @@ public class PlayerListItem : MonoBehaviourPunCallbacks
 {
     [Header("GUI")]
     [SerializeField] TMP_Text text_PlayerName;
-    Player player;
+
+    public Player Player { get; private set; }
 
     public void Setup(Player _player)
     {
-        player = _player;
-        text_PlayerName.text = _player.NickName;
+        Player = _player;
+
+        if (_player.IsMasterClient)
+        {
+            text_PlayerName.text = _player.NickName + "[Host]";
+        }
+        else
+        {
+            text_PlayerName.text = _player.NickName;
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if (player == otherPlayer)
+        if (Player == otherPlayer)
         {
             Destroy(gameObject);
         }

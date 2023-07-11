@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -11,12 +12,15 @@ public class Launcher : MonoBehaviourPunCallbacks
     private TMP_InputField input_RoomName;
     [SerializeField]
     private TMP_Text text_RoomName;
+    [SerializeField]
+    private GameObject button_StartGame;
 
     [Header("Room")]
     [SerializeField]
     private Transform playerListContent;
     [SerializeField]
     private GameObject playerListItemPrefab;
+    private List<PlayerListItem> playerLists;
 
     #region Lobby
     void Start()
@@ -80,6 +84,9 @@ public class Launcher : MonoBehaviourPunCallbacks
         MenuManager.Instance.OpenMenu(MenuName.RoomMenu);
         text_RoomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
 
+        // Prepare new player lists
+        playerLists = new();
+
         // Remove previous room's player list
         foreach (Transform child in playerListContent)
         {
@@ -91,7 +98,26 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < players.Length; i++)
         {
-            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(players[i]);
+            PlayerListItem newPlayerList = Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>();
+            newPlayerList.Setup(players[i]);
+            playerLists.Add(newPlayerList);
+        }
+
+        // Show button for host only
+        button_StartGame.SetActive(PhotonNetwork.IsMasterClient);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        button_StartGame.SetActive(PhotonNetwork.IsMasterClient);
+
+        // Setup for new host
+        for (int i = 0; i < playerLists.Count; i++)
+        {
+            if (playerLists[i].Player == newMasterClient)
+            {
+                playerLists[i].Setup(newMasterClient);
+            }
         }
     }
 

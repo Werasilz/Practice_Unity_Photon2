@@ -1326,6 +1326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input_RoomName: {fileID: 1548989775}
   text_RoomName: {fileID: 1745670371}
+  button_StartGame: {fileID: 2059994782}
   playerListContent: {fileID: 1603208145}
   playerListItemPrefab: {fileID: 1502773517551435311, guid: 95371527bb2bb1945afa39c9968ac7c1, type: 3}
 --- !u!4 &579162779
