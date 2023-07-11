@@ -5,6 +5,7 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField] private GameObject[] menus;
     private GameObject currentOpenedMenu;
 
+    #region Open Menu
     // Open menu by index (Enum)
     public void OpenMenu(MenuName menuName)
     {
@@ -36,7 +37,9 @@ public class MenuManager : Singleton<MenuManager>
         // Set to current menu
         currentOpenedMenu = menuObject;
     }
+    #endregion
 
+    #region Close Menu
     // Close menu by index (Enum)
     public void CloseMenu(MenuName menuName)
     {
@@ -47,6 +50,12 @@ public class MenuManager : Singleton<MenuManager>
     public void CloseMenu(GameObject menuObject)
     {
         menuObject.SetActive(false);
+    }
+    #endregion
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
 

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 
@@ -8,8 +10,15 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private TMP_InputField input_RoomName;
     [SerializeField]
-    private TextMeshProUGUI text_RoomName;
+    private TMP_Text text_RoomName;
 
+    [Header("Room")]
+    [SerializeField]
+    private Transform playerListContent;
+    [SerializeField]
+    private GameObject playerListItemPrefab;
+
+    #region Lobby
     void Start()
     {
         print("[Photon] Connecting to Master");
@@ -27,8 +36,11 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         print("[Photon] Joined Lobby");
         MenuManager.Instance.OpenMenu(MenuName.TitleMenu);
+        PhotonNetwork.NickName = "Player#" + Random.Range(0, 1000).ToString("0000");
     }
+    #endregion
 
+    #region Room
     public void CreateRoom()
     {
         if (string.IsNullOrEmpty(input_RoomName.text))
@@ -42,11 +54,37 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(input_RoomName.text);
     }
 
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+
+    }
+
+    public void FindRoom()
+    {
+        print("[Photon] Joining Random Room");
+        PhotonNetwork.JoinRandomRoom();
+        MenuManager.Instance.OpenMenu(MenuName.LoadingMenu);
+    }
+
     public override void OnJoinedRoom()
     {
         print("[Photon] Joined Room:" + PhotonNetwork.CurrentRoom.Name);
         MenuManager.Instance.OpenMenu(MenuName.RoomMenu);
         text_RoomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
+
+        // Remove previous room's player list
+        foreach (Transform child in playerListContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Create player list in room
+        Player[] players = PhotonNetwork.PlayerList;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(players[i]);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -67,4 +105,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         print("[Photon] Leave Room");
         MenuManager.Instance.OpenMenu(MenuName.TitleMenu);
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        print("[Photon] Player is joining: " + newPlayer.NickName);
+        Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().Setup(newPlayer);
+    }
+    #endregion
 }
