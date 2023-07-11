@@ -1,7 +1,0 @@
-root=true
-
-[*.cs]
-# generated_code = true
-dotnet_diagnostic.IDE0051.severity = none
-# dotnet_analyzer_diagnostic.severity = none
-# dotnet_diagnostic.UNT0005.severity = suggestion
