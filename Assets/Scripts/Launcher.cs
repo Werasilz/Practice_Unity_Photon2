@@ -30,6 +30,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         print("[Photon] Connected to Master");
         PhotonNetwork.JoinLobby();
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
@@ -54,16 +55,23 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(input_RoomName.text);
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    public override void OnCreateRoomFailed(short returnCode, string message)
     {
-
+        print("[Photon] Room Creation Failed: " + message);
+        MenuManager.Instance.OpenMenu(MenuName.RoomFailedMenu);
     }
 
     public void FindRoom()
     {
-        print("[Photon] Joining Random Room");
+        print("[Photon] Joining random room");
         PhotonNetwork.JoinRandomRoom();
         MenuManager.Instance.OpenMenu(MenuName.LoadingMenu);
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        print("[Photon] Failed to join a random room");
+        MenuManager.Instance.OpenMenu(MenuName.RoomFailedMenu);
     }
 
     public override void OnJoinedRoom()
@@ -87,10 +95,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnCreateRoomFailed(short returnCode, string message)
+    public void StartGame()
     {
-        print("[Photon] Room Creation Failed: " + message);
-        MenuManager.Instance.OpenMenu(MenuName.RoomFailedMenu);
+        print("[Photon] Start Game");
+        PhotonNetwork.LoadLevel(1);
     }
 
     public void LeaveRoom()
