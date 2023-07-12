@@ -13,12 +13,12 @@ public class ItemInteract : MonoBehaviour, IInteractable
 
     public void Interact(Interaction interaction, ItemHolder itemHolder)
     {
-        // New Item Instance
+        // Create new Item Instance
         GoodsItem newGoodsItem = ScriptableObject.CreateInstance<GoodsItem>();
         newGoodsItem.Init(item);
 
         // Set holding item
-        interaction.SetHolderItem(newGoodsItem);
+        interaction.SetHoldingItem(newGoodsItem);
         itemHolder.SetActiveItemObject(true);
 
         // Destroy Object
@@ -27,11 +27,11 @@ public class ItemInteract : MonoBehaviour, IInteractable
             PhotonNetwork.Destroy(gameObject);
         }
 
-        photonView.RPC("RPC_Destroy", RpcTarget.All);
+        photonView.RPC("RPC_SyncDestroy", RpcTarget.All);
     }
 
     [PunRPC]
-    private void RPC_Destroy()
+    private void RPC_SyncDestroy()
     {
         Destroy(gameObject);
     }

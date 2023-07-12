@@ -1,8 +1,11 @@
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Interaction : MonoBehaviour
+public class Interaction : MonoBehaviourPunCallbacks
 {
+    private PhotonView _photonView;
     private ControlsInput _input;
     private ItemHolder _itemHolder;
 
@@ -14,6 +17,7 @@ public class Interaction : MonoBehaviour
 
     private void Start()
     {
+        _photonView = GetComponent<PhotonView>();
         _input = GetComponent<ControlsInput>();
         _itemHolder = GetComponentInChildren<ItemHolder>();
     }
@@ -63,15 +67,35 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    public void SetHolderItem(Item item)
+    public void SetHoldingItem(Item item)
     {
         if (item != null)
         {
             HoldingItem = item;
+            photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, HoldingItem.Id, HoldingItem.ItemName);
+
         }
         else
         {
             Destroy(item);
+            HoldingItem = null;
+            photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, -1, string.Empty);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_SyncHoldingItem(int itemId, string itemName)
+    {
+        if (itemId != -1)
+        {
+            // Create new Item Instance
+            GoodsItem newGoodsItem = ScriptableObject.CreateInstance<GoodsItem>();
+            newGoodsItem.Init(itemId, itemName);
+
+            HoldingItem = newGoodsItem;
+        }
+        else
+        {
             HoldingItem = null;
         }
     }

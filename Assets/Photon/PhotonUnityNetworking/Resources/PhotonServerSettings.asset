@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - SyncObjectDestruction
   - RPC_Destroy
+  - RPC_SyncHoldingItem
+  - RPC_SyncDestroy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class ItemHolder : MonoBehaviour
+public class ItemHolder : MonoBehaviourPunCallbacks
 {
     private Interaction interaction;
 
