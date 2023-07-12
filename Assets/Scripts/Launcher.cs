@@ -56,7 +56,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         print("[Photon] Creating Room: " + input_RoomName.text);
         MenuManager.Instance.OpenMenu(MenuName.LoadingMenu);
-        PhotonNetwork.CreateRoom(input_RoomName.text);
+
+        RoomOptions roomOptions = new()
+        {
+            IsVisible = true,
+            MaxPlayers = 4
+        };
+
+        PhotonNetwork.CreateRoom(input_RoomName.text, roomOptions, TypedLobby.Default);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
