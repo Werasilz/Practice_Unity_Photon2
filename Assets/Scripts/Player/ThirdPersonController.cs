@@ -1,6 +1,9 @@
-﻿using Photon.Pun;
+﻿using System.Collections;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -9,7 +12,7 @@ using UnityEngine.InputSystem;
 #if ENABLE_INPUT_SYSTEM
 [RequireComponent(typeof(PlayerInput))]
 #endif
-public class ThirdPersonController : MonoBehaviour
+public class ThirdPersonController : MonoBehaviourPunCallbacks
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
@@ -102,7 +105,10 @@ public class ThirdPersonController : MonoBehaviour
     private CharacterController _controller;
     private ControlsInput _input;
     private GameObject _mainCamera;
+
+    // Photon
     private PhotonView _photonView;
+    private PhotonAnimatorView _photonAnimatorView;
 
     private const float _threshold = 0.01f;
 
@@ -113,6 +119,7 @@ public class ThirdPersonController : MonoBehaviour
     private void Awake()
     {
         _photonView = GetComponent<PhotonView>();
+        _photonAnimatorView = GetComponent<PhotonAnimatorView>();
 
         if (_photonView.IsMine)
         {
@@ -174,6 +181,21 @@ public class ThirdPersonController : MonoBehaviour
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
     }
 
+    private void PlayAnimation(int id, bool value)
+    {
+        _animator.SetBool(id, value);
+    }
+
+    private void PlayAnimation(int id, float value)
+    {
+        _animator.SetFloat(id, value);
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+
+    }
+
     private void GroundedCheck()
     {
         // set sphere position, with offset
@@ -185,7 +207,7 @@ public class ThirdPersonController : MonoBehaviour
         // update animator if using character
         if (_hasAnimator)
         {
-            _animator.SetBool(_animIDGrounded, Grounded);
+            PlayAnimation(_animIDGrounded, Grounded);
         }
     }
 
@@ -273,8 +295,8 @@ public class ThirdPersonController : MonoBehaviour
         // update animator if using character
         if (_hasAnimator)
         {
-            _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            PlayAnimation(_animIDSpeed, _animationBlend);
+            PlayAnimation(_animIDMotionSpeed, inputMagnitude);
         }
     }
 
@@ -288,8 +310,8 @@ public class ThirdPersonController : MonoBehaviour
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
+                PlayAnimation(_animIDJump, false);
+                PlayAnimation(_animIDFreeFall, false);
             }
 
             // stop our velocity dropping infinitely when grounded
@@ -307,7 +329,7 @@ public class ThirdPersonController : MonoBehaviour
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, true);
+                    PlayAnimation(_animIDJump, true);
                 }
             }
 
@@ -332,7 +354,7 @@ public class ThirdPersonController : MonoBehaviour
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDFreeFall, true);
+                    PlayAnimation(_animIDFreeFall, true);
                 }
             }
 
