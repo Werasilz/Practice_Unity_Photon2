@@ -54,12 +54,12 @@ public class Interaction : MonoBehaviour
 
                 if (itemInteract != null && HoldingItem == null)
                 {
-                    itemInteract.Interact(this, _itemHolder);
+                    itemInteract.Interact(this, _itemHolder, _photonView);
                 }
 
                 if (deliverStation != null && HoldingItem != null)
                 {
-                    deliverStation.Interact(this, _itemHolder);
+                    deliverStation.Interact(this, _itemHolder, _photonView);
                 }
             }
         }

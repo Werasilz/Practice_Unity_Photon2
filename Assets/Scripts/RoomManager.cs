@@ -46,8 +46,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             print("[Photon] Create Player Manager");
             GameObject newPlayerManager = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "[Photon]PlayerManager"), Vector3.zero, Quaternion.identity);
-            // PhotonView photonView = newPlayerManager.GetComponent<PhotonView>();
-            // newPlayerManager.name = newPlayerManager.name + "_" + photonView.Owner.NickName;
+
+            // Setup GUI
+            LeaderBoardManager.Instance.SetupBoard();
         }
     }
 }

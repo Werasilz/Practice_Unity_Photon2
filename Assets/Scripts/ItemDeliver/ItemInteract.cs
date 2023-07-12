@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class ItemInteract : MonoBehaviour, IInteractable
 {
-    private PhotonView photonView;
+    private PhotonView _photonView;
     public Item item;
 
     private void Start()
     {
-        photonView = GetComponent<PhotonView>();
+        _photonView = GetComponent<PhotonView>();
     }
 
-    public void Interact(Interaction interaction, ItemHolder itemHolder)
+    public void Interact(Interaction interaction, ItemHolder itemHolder, PhotonView photonView)
     {
         // Create new Item Instance
         GoodsItem newGoodsItem = ScriptableObject.CreateInstance<GoodsItem>();
@@ -22,12 +22,8 @@ public class ItemInteract : MonoBehaviour, IInteractable
         itemHolder.SetActiveItemObject(true);
 
         // Destroy Object
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
-
-        photonView.RPC("RPC_SyncDestroy", RpcTarget.All);
+        Destroy(gameObject);
+        _photonView.RPC("RPC_SyncDestroy", RpcTarget.All);
     }
 
     [PunRPC]
