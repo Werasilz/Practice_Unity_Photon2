@@ -1,9 +1,7 @@
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Interaction : MonoBehaviourPunCallbacks
+public class Interaction : MonoBehaviour
 {
     private PhotonView _photonView;
     private ControlsInput _input;
@@ -72,14 +70,13 @@ public class Interaction : MonoBehaviourPunCallbacks
         if (item != null)
         {
             HoldingItem = item;
-            photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, HoldingItem.Id, HoldingItem.ItemName);
-
+            _photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, HoldingItem.Id, HoldingItem.ItemName);
         }
         else
         {
             Destroy(item);
             HoldingItem = null;
-            photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, -1, string.Empty);
+            _photonView.RPC("RPC_SyncHoldingItem", RpcTarget.Others, -1, string.Empty);
         }
     }
 

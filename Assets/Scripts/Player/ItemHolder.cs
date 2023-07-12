@@ -1,8 +1,9 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class ItemHolder : MonoBehaviourPunCallbacks
+public class ItemHolder : MonoBehaviour
 {
+    private PhotonView photonView;
     private Interaction interaction;
 
     [Header("Item Objects")]
@@ -10,12 +11,24 @@ public class ItemHolder : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        interaction = GetComponentInParent<Interaction>();
+        photonView = GetComponent<PhotonView>();
+        interaction = GetComponent<Interaction>();
     }
 
     public void SetActiveItemObject(bool isActive)
     {
         // Enable item object
-        itemObjects[interaction.HoldingItem.Id].SetActive(isActive);
+        if (interaction.HoldingItem != null)
+        {
+            itemObjects[interaction.HoldingItem.Id].SetActive(isActive);
+        }
+
+        photonView.RPC("RPC_SyncActiveItem", RpcTarget.Others, isActive);
+    }
+
+    [PunRPC]
+    private void RPC_SyncActiveItem(bool isActive)
+    {
+        SetActiveItemObject(isActive);
     }
 }

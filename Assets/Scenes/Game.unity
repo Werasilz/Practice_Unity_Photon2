@@ -2477,7 +2477,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1276413549
 MonoBehaviour:
@@ -2850,6 +2850,22 @@ PrefabInstance:
     - target: {fileID: -4784827423266629861, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
       propertyPath: sceneViewId
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 900106369268941222, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830536065795595977, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3014054033324519529, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4315085197109388722, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6373136017307442340, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
       propertyPath: sceneViewId

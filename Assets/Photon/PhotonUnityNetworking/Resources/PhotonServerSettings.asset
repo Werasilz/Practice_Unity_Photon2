@@ -43,6 +43,7 @@ MonoBehaviour:
   - RPC_Destroy
   - RPC_SyncHoldingItem
   - RPC_SyncDestroy
+  - RPC_SyncActiveItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
