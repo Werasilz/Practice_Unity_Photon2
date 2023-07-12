@@ -1,7 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
-using Cinemachine;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -22,7 +21,9 @@ public class PlayerManager : MonoBehaviour
 
     private void CreateController()
     {
+        Transform spawnPoint = SpawnManager.Instance.GetSpawnPoint();
+
         // Create controller and camera
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "[Photon]PlayerController"), Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "[Photon]PlayerController"), spawnPoint.position, Quaternion.identity);
     }
 }
