@@ -1,4 +1,4 @@
-using UnityEngine;
+using Photon.Pun;
 
 public interface IInteractable
 {

@@ -2364,6 +2364,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8631159295884337807, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2847,9 +2851,17 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6373136017307442340, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8638552468124458354, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
       propertyPath: m_Name
       value: '[Photon]PlayerController'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638552468124458354, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9047521894654888893, guid: ecd9da78f1590a2498b0f2ee40fca46f, type: 3}
       propertyPath: m_RootOrder
@@ -2955,6 +2967,10 @@ PrefabInstance:
     - target: {fileID: 1882344639934526391, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631159295884337807, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
+      propertyPath: sceneViewId
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7177,6 +7193,14 @@ PrefabInstance:
     - target: {fileID: 1882344639934526391, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631159295884337807, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631159295884337807, guid: fd604001ff0bb8044b6d8f5f0222c401, type: 3}
+      propertyPath: OwnershipTransfer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
