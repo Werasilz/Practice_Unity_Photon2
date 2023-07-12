@@ -10,6 +10,7 @@ public class ControlsInput : MonoBehaviour
 	public Vector2 look;
 	public bool jump;
 	public bool sprint;
+	public bool interact;
 
 	[Header("Movement Settings")]
 	public bool analogMovement;
@@ -46,6 +47,11 @@ public class ControlsInput : MonoBehaviour
 	{
 		SprintInput(value.isPressed);
 	}
+
+	public void OnInteract(InputValue value)
+	{
+		InteractInput(value.isPressed);
+	}
 #endif
 
 	public void MoveInput(Vector2 newMoveDirection)
@@ -68,6 +74,11 @@ public class ControlsInput : MonoBehaviour
 		sprint = newSprintState;
 	}
 
+	public void InteractInput(bool newInteractState)
+	{
+		interact = newInteractState;
+	}
+
 	private void OnApplicationFocus(bool hasFocus)
 	{
 		SetCursorState(cursorLocked);
@@ -76,5 +87,10 @@ public class ControlsInput : MonoBehaviour
 	private void SetCursorState(bool newState)
 	{
 		Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+	}
+
+	private void LateUpdate()
+	{
+		interact = false;
 	}
 }
